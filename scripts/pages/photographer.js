@@ -7,12 +7,13 @@ let medias
 const media_modal = document.getElementById('media_modal')
 const contact_modal = document.getElementById('contact_modal')
 const photograph_medias = document.getElementById('photograph_medias')
-const orderSelect = document.getElementById('orderSelect')
+const orderSelection = document.getElementById('orderSelection')
 const likes = []
 
 // Fetch
 async function getPhotographer() {
     try {
+        // Initialisation du système
         const response = await fetch('./data/photographers.json')
         const data = await response.json()
         photographer = data.photographers.find((photographer) => photographer.id == photographerId)
@@ -21,28 +22,33 @@ async function getPhotographer() {
         photographerHeader(photographer)
         likesPrice(medias, photographer.price)
         orderMedias(photographer)
-        orderSelection.onchange = ({target: {value}}) => orderMedias(photographer, value)
+        orderSelection.onchange = ({
+            target: {
+                value
+            }
+        }) => orderMedias(photographer, value)
+        // Event Lister pour les flèches et l'escape dans la modale
         addEventListener('keydown', (e) => {
-            if (media_modal.style.display && media_modal.style.display !== 'none') {
-				if (e.code === 'ArrowLeft') {
-					return changeMedia('left')
-				}
-				if (e.code === 'ArrowRight') {
-					return changeMedia('right')
-				}
-				if (e.code === 'Escape') {
-					return closeMediaModal()
-				}
-			}
-            if (contact_modal.style.display && contact_modal.style.display !== 'none') {
-				if (e.code === 'Escape') {
-					contact_modal.style.display = 'none'
-				}
-			}
+            if (media_modal.style.display !== 'none') {
+                if (e.code === 'ArrowLeft') {
+                    return changeMedia('left')
+                }
+                if (e.code === 'ArrowRight') {
+                    return changeMedia('right')
+                }
+                if (e.code === 'Escape') {
+                    return closeMediaModal()
+                }
+            }
+            if (contact_modal.style.display !== 'none') {
+                if (e.code === 'Escape') {
+                    contact_modal.style.display = 'none'
+                }
+            }
         })
-        // orderSelection.
+        // Ajout du nom du photographe dans le form
         const contactTitle = document.querySelector('#contact_modal h2')
-        contactTitle.textContent += ' '  +  photographer.name
+        contactTitle.textContent += ' ' + photographer.name
     } catch (error) {
         console.error(error)
     }
@@ -51,7 +57,14 @@ async function getPhotographer() {
 
 // photographer infos
 async function photographerHeader(photographer) {
-    const {name, city, country, tagline, price, portrait } = photographer
+    const {
+        name,
+        city,
+        country,
+        tagline,
+        price,
+        portrait
+    } = photographer
     const namePhotograph = document.querySelector('.photograph-infos > h1')
     const cityPhotograph = document.querySelector('.photograph-infos > p:nth-child(2)')
     const taglinePhotograph = document.querySelector('.photograph-infos > p:nth-child(3)')
@@ -79,7 +92,7 @@ function likesPrice(medias, price) {
 // fin de likes and price
 
 // display Medias
-function displayMedias(photographer,medias) {
+function displayMedias(photographer, medias) {
     const mediasSection = document.getElementById('photograph_medias')
     mediasSection.innerHTML = ""
 
@@ -100,7 +113,10 @@ function displayMedias(photographer,medias) {
         spanName.textContent = media.title
         btnLike.textContent = media.likes + ' ❤️'
         btnLike.classList.add('like')
-        btnLike.onclick = ({target}) => {
+        // Action au clic sur le bouton like qui vérifie que le like se fait une seule fois
+        btnLike.onclick = ({
+            target
+        }) => {
             if (likes.includes(media.id)) {
                 return console.log('Validation like')
             }
@@ -111,41 +127,51 @@ function displayMedias(photographer,medias) {
             likes.push(media.id)
         }
 
-// Display modal
+        // Display modal
         link.onclick = (event) => {
             event.preventDefault()
             if (event.target.classList.contains('like')) return
-			media_modal.children[media_modal.children.length - 1].appendChild(mediaType.cloneNode())
-			media_modal.children[media_modal.children.length - 1].children[0].controls = true
-			media_modal.children[media_modal.children.length - 1].appendChild(spanName.cloneNode(true))
-			media_modal.style.display = 'inherit'
-			document.body.style.overflow = 'hidden'
+            media_modal.children[media_modal.children.length - 1].appendChild(mediaType.cloneNode())
+            media_modal.children[media_modal.children.length - 1].children[0].controls = true
+            media_modal.children[media_modal.children.length - 1].appendChild(spanName.cloneNode(true))
+            media_modal.style.display = 'inherit'
+            document.body.style.overflow = 'hidden'
         }
-// Fin display modal
+        // Fin display modal
 
+        // Btn like
         spanLike.appendChild(btnLike)
+        // section
         link.appendChild(article)
+        // div du media
         article.appendChild(mediaType)
+        // div pour name et like btn
         article.appendChild(divInfos)
+        // Name medias
         divInfos.appendChild(spanName)
+        // Like btn
         divInfos.appendChild(spanLike)
+        // Section full
         mediasSection.appendChild(link)
     }
 }
 
 // orderBy
 function orderMedias(photographer, orderBy = 'pop') {
-    switch(orderBy) {
-        case 'pop' : {
-            medias.sort((a,b) => b.likes - a.likes)
+    switch (orderBy) {
+        case 'pop': {
+            // Tri par nb likes -> Plus haut au moins haut (donc b - a)
+            medias.sort((a, b) => b.likes - a.likes)
             break
         }
-        case 'date' : {
-            medias.sort((a,b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+        case 'date': {
+            // Tri par date -> Compare date et du plus ancient au plus récent
+            medias.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
             break
         }
-        case 'title' : {
-            medias.sort((a,b) => a.title.localeCompare(b.title))
+        case 'title': {
+            // Tri alphabétique
+            medias.sort((a, b) => a.title.localeCompare(b.title))
             break
         }
     }
@@ -154,7 +180,7 @@ function orderMedias(photographer, orderBy = 'pop') {
 // fin orderBy
 //fin display Medias
 
-// Close modale
+// Close modal
 function closeMediaModal() {
     media_modal.children[media_modal.children.length - 1].innerHTML = ''
     media_modal.style.display = 'none'
