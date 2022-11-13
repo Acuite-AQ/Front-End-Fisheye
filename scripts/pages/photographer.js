@@ -109,6 +109,8 @@ function displayMedias(photographer, medias) {
         link.href = "#"
         mediaType.src = `./assets/images/${photographer.name}/${media.video ?? media.image}`
         mediaType.alt = media.title
+        mediaType.controls = false
+        mediaType.autoplay = false
 
         spanName.textContent = media.title
         btnLike.textContent = media.likes + ' ❤️'
