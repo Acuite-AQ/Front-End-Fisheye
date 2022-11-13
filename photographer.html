@@ -9,28 +9,85 @@
   </head>
   <body>
     <header>
-      <img src="assets/images/logo.png" class="logo" />
+      <a href="./index.html">
+      <img src="assets/images/logo.png" alt="Logo et bouton accueil du site" class="logo" />
+    </a>
     </header>
     <main id="main">
+      <!-- Section photographes -->
       <div class="photograph-header">
+        <div class="photograph-infos">
+          <h1> </h1>
+          <p> </p>
+          <p> </p>
+        </div>
         <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
       </div>
-    </main>
     <div id="contact_modal">
 			<div class="modal">
 				<header>
           <h2>Contactez-moi</h2>
           <img src="assets/icons/close.svg" onclick="closeModal()" />
         </header>
-				<form>
+				<form onsubmit="sendMessage(event)">
 					<div>
-						<label>Prénom</label>
-						<input />
+						<label for="firstname">Prénom</label>
+						<input id="firstname" class="firstname"/>
 					</div>
-          <button class="contact_button">Envoyer</button>
+          <div>
+						<label for="lastname">Nom</label>
+						<input id="lastname" class="lastname"/>
+					</div>
+          <div>
+						<label for="email">Email</label>
+						<input id="email" class="email"/>
+					</div>
+          <div>
+						<label for="message">Votre message</label>
+						<textarea  id="message" class="message"> </textarea>
+					</div>
+          <button class="contact_button" aria-label="Envoyer">Envoyer</button>
 				</form>
 			</div>
 		</div>
+      <!-- Fin section photographes -->
+    </main>
+    <!-- Section Trier Par--->
+    <div id="select">
+      <label for="orderSelection"> Trier par </label>
+      <select name="orderSelection" id="orderSelection">
+        <option value="pop"> Popularité </option>
+        <option value="date"> Date </option>
+        <option value="title"> Titre </option>
+      </select>
+    </div>
+    <!-- Fin section Trier Par --->
+
+    <!-- Section photos display --->
+  <section id="photograph_medias"> </section>
+    <!--- Fin section photos display -->
+
+      <!-- Section Likes et Prix --->
+      <div class="photograph_likeandprice">
+        <span> </span>
+        <span> </span>
+      </div>
+      <!-- Fin section Likes et Prix -->
+
+  <!-- Section modal display -->
+  <div id="media_modal" aria-label="Media modal">
+    <button id="left-arrow" aria-label="Image précédente"> < </button>
+    <button id="right-arrow" aria-label="Image suivante"> > </button>
+    <button aria-label="Fermer la modale" onclick="closeMediaModal()"> <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <title>Close dialog</title>
+      <path d="M42 4.23L37.77 0L21 16.77L4.23 0L0 4.23L16.77 21L0 37.77L4.23 42L21 25.23L37.77 42L42 37.77L25.23 21L42 4.23Z" fill="white" />
+    </svg>
+  </button>
+  <div> </div>
+
+  </div>
+  <!-- Fin section modal display -->
+
     <script src="/scripts/pages/photographer.js"></script>
     <script src="/scripts/utils/contactForm.js"></script>
   </body>

@@ -31,20 +31,46 @@ h1 {
     margin-top: 100px;
 }
 
-.photographer_section article {
-    justify-self: center;
+.photographer_section article>a {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: unset;
+    color: unset;
+}
+
+.photographer_section article>div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .photographer_section article h2 {
     color: #D3573C;
     font-size: 36px;
+    text-align: center;
+    margin: 4px;
 }
 
 .photographer_section article img {
     height: 200px;
     width: 200px;
+    border-radius: 100%;
+    object-fit: cover;
+}
+
+.photographer_section article p {
+    margin: 2px;
+}
+
+.photographer_section article p:first-child {
+    color: #901C1C;
+}
+
+.photographer_section article p:last-child {
+    font-weight: 100;
+    color: #525252;
 }
