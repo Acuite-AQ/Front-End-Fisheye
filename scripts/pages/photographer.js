@@ -162,7 +162,7 @@ function displayMedias(photographer, medias) {
 function orderMedias(photographer, orderBy = 'pop') {
     switch (orderBy) {
         case 'pop': {
-            // Tri par nb likes -> Plus haut au moins haut (donc b - a)
+            // Tri par nb likes -> Plus haut au moins haut
             medias.sort((a, b) => b.likes - a.likes)
             break
         }
@@ -181,6 +181,38 @@ function orderMedias(photographer, orderBy = 'pop') {
 }
 // fin orderBy
 //fin display Medias
+
+function changeMedia(direction) {
+    // On accède au dernier élément de media modal et ensuite à son premier enfant (la div img/vid)
+    const media = media_modal.children[media_modal.children.length - 1].children[0]
+    // Ici on accède à l'enfant de la div càd le span de texte, qu'on supprime
+    media_modal.children[media_modal.children.length - 1].children[1].remove()
+    // Découpe de l'url de l'image
+    const mediaSrc = media.src.split('/').pop()
+    const mediaIndex = medias.indexOf(medias.find((el) => (el.video ?? el.image) == mediaSrc))
+    media.remove()
+    let newIndex = direction === 'left' ? mediaIndex - 1 : mediaIndex + 1
+
+    // Si on est au premier élément et qu'on recule > Retourne à la fin
+    if (newIndex < 0) {
+        newIndex = medias.length - 1
+    // Si on est au dernier élément et qu'on avance > Retourne au début
+    } else if (newIndex >= medias.length) {
+        newIndex = 0
+    }
+
+    // Creation des nouveaux medias
+    const newMediaElement = medias[newIndex].image ? document.createElement('img') : document.createElement('video')
+    const newSpanElement = document.createElement('span')
+    newMediaElement.src = `./assets/images/${photographer.name}/${medias[newIndex].image ?? medias[newIndex].video}`
+    newMediaElement.alt = medias[newIndex].title
+    newSpanElement.textContent = medias[newIndex].title
+
+    // Insertion des nouveaux medias
+    media_modal.children[media_modal.children.length - 1].appendChild(newMediaElement)
+    media_modal.children[media_modal.children.length - 1].appendChild(newSpanElement)
+
+}
 
 // Close modal
 function closeMediaModal() {
