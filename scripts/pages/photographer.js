@@ -13,7 +13,7 @@ const likes = []
 // Fetch
 async function getPhotographer() {
     try {
-        // Initialisation du système
+        // Initialisation du système/photographe
         const response = await fetch('./data/photographers.json')
         const data = await response.json()
         photographer = data.photographers.find((photographer) => photographer.id == photographerId)
@@ -29,6 +29,7 @@ async function getPhotographer() {
         }) => orderMedias(photographer, value)
         // Event Lister pour les flèches et l'escape dans la modale
         addEventListener('keydown', (e) => {
+            // Vérifie si la modale n'est pas cachée
             if (media_modal.style.display !== 'none') {
                 if (e.code === 'ArrowLeft') {
                     return changeMedia('left')
@@ -40,13 +41,14 @@ async function getPhotographer() {
                     return closeMediaModal()
                 }
             }
+            // Même vérif pour la modale de contact
             if (contact_modal.style.display !== 'none') {
                 if (e.code === 'Escape') {
                     contact_modal.style.display = 'none'
                 }
             }
         })
-        // Ajout du nom du photographe dans le form
+        // Ajout du nom du photographe dans le form de contact
         const contactTitle = document.querySelector('#contact_modal h2')
         contactTitle.textContent += ' ' + photographer.name
     } catch (error) {
@@ -159,9 +161,9 @@ function displayMedias(photographer, medias) {
 }
 
 // orderBy
-function orderMedias(photographer, orderBy = 'pop') {
+function orderMedias(photographer, orderBy = 'popular') {
     switch (orderBy) {
-        case 'pop': {
+        case 'popular': {
             // Tri par nb likes -> Plus haut au moins haut
             medias.sort((a, b) => b.likes - a.likes)
             break
@@ -196,7 +198,7 @@ function changeMedia(direction) {
     // Si on est au premier élément et qu'on recule > Retourne à la fin
     if (newIndex < 0) {
         newIndex = medias.length - 1
-    // Si on est au dernier élément et qu'on avance > Retourne au début
+        // Si on est au dernier élément et qu'on avance > Retourne au début
     } else if (newIndex >= medias.length) {
         newIndex = 0
     }
