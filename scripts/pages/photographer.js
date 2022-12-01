@@ -108,6 +108,7 @@ function displayMedias(photographer, medias) {
         const btnLike = document.createElement('button')
         btnLike.setAttribute('aria-label', "Bouton j'aime")
 
+        article.dataset.id = media.id
         link.href = "#"
         mediaType.src = `./assets/images/${photographer.name}/${media.video ?? media.image}`
         mediaType.alt = media.title

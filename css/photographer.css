@@ -166,8 +166,12 @@ form textarea {
     font-size: 18px;
 }
 
-#select {
+#radio_select {
     margin: 25px 100px;
+}
+
+#radio_select:hover {
+    margin-bottom: 2px solid white;
 }
 
 #select label {
@@ -181,6 +185,47 @@ form textarea {
     padding: 10px;
     border-radius: 8px;
     color:white;
+}
+
+#popular, #date, #title {
+    
+    box-shadow: 0px 10px 5px 0px rgba(0,0,0,0.75);
+-webkit-box-shadow: 0px 10px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 10px 5px 0px rgba(0,0,0,0.75);
+}
+
+
+/* input[type="radio"] {
+    display: none;
+    background-color: #901C1C;
+  }
+
+/* input[type="radio"] + label {
+display: none;
+} */
+
+input[type="radio"]:checked + label {
+    background-color: #901C1C;
+color: white;
+display: inline-block;
+}
+
+.radio_select:hover label {
+    display: inline-block;
+  }
+
+.radio_select {
+background-color: #28AADC;
+display: inline-block;
+} */
+/* #popular {
+    margin-bottom: 5px;
+    border-bottom: 2px solid white;
+} */
+
+#date {
+    border-bottom: 1px solid white;
+
 }
 
 #media_modal {
